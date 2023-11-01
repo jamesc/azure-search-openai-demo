@@ -59,6 +59,7 @@ param useAuthentication bool = false
 param authClientId string = ''
 @secure()
 param authClientSecret string = ''
+param authTenantId string = tenant().tenantId
 
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
@@ -69,6 +70,7 @@ param useApplicationInsights bool = false
 var abbrs = loadJsonContent('abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
+
 
 // Organize resources in a resource group
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -136,7 +138,7 @@ module backend 'core/host/appservice.bicep' = {
     managedIdentity: true
     authClientId: useAuthentication ? authClientId : ''
     authClientSecret: useAuthentication ? authClientSecret : ''
-    authIssuerUri: useAuthentication ? '${environment().authentication.loginEndpoint}${tenant().tenantId}/v2.0' : ''
+    authIssuerUri: useAuthentication ? '${environment().authentication.loginEndpoint}${authTenantId}/v2.0' : ''
     appSettings: {
       AZURE_STORAGE_ACCOUNT: storage.outputs.name
       AZURE_STORAGE_CONTAINER: storageContainerName

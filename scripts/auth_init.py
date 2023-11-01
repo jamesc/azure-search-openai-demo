@@ -68,7 +68,7 @@ if __name__ == "__main__":
         exit(0)
 
     print("AZURE_USE_AUTHENTICATION is true, setting up authentication...")
-    credential = AzureDeveloperCliCredential()
+    credential = AzureDeveloperCliCredential(tenant_id = os.getenv("AZURE_AUTH_TENANT_ID"))
 
     app_id = os.getenv("AZURE_AUTH_APP_ID", "no-id")
     if app_id != "no-id":

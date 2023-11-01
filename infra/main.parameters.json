@@ -64,6 +64,9 @@
     },
     "authClientSecret": {
       "value": "${AZURE_AUTH_CLIENT_SECRET}"
+    },
+    "authTenantId": {
+      "value": "${AZURE_AUTH_TENANT_ID}"
     }
   }
 }
